@@ -1,86 +1,49 @@
-# ATOMVERSE 2.0 — ATOM FORGE (LAB 01)
+# ATOMVERSE 3.0 — Complete Chemistry Mass Lab
 
-โปรเจกต์ใหม่แบบ React + TypeScript + Vite + React Three Fiber/Three.js สำหรับนักเรียนเคมี ม.4
+4 interactive laboratories in one React/TypeScript/Vite + React Three Fiber web application. **Development build, not classroom-certified**: scientific unit tests were run, but npm dependency installation/build and browser interaction could not be verified in the authoring environment.
 
-## สถานะงาน (สำคัญ)
+## What's inside
 
-- ✅ มีซอร์สโค้ดหน้าแรก Luminous Hybrid Lab, โมเดล Three.js, เครื่องมือควบคุม, เปรียบเทียบ A/B, 5 missions, และระบบคำนวณแยกต่างหาก
-- ✅ ทดสอบตรรกะเคมีจริง 16 กรณี (ด้วย Node.js type-stripping) และผ่าน 16/16
-- ⚠️ **ยังไม่ได้ Build หรือทดสอบ UI ใน browser จริง** เพราะสภาพแวดล้อมที่สร้างไฟล์ไม่สามารถเข้าถึง npm registry เพื่อดาวน์โหลด React/Three.js/Vite ได้ (`EAI_AGAIN`). จึงไม่ควรถือว่า deploy-ready จนกว่าจะ `npm install`, `npm run build` และทดลอง UI ผ่าน
-- ⚠️ รองรับการลากอนุภาคจากถาดลงพื้นที่เวทีด้วย HTML drag-and-drop สำหรับ desktop; มือถือให้แตะอนุภาคหรือกด +/- (ยังไม่มี touch-drag จริง)
-- ⚠️ fallback เมื่อ WebGL ใช้ไม่ได้ยังเป็นข้อความพร้อมค่าทางเคมี/ตัวควบคุม ไม่ใช่ 2D interactive scene เต็มรูปแบบ
+- **LAB 01 Atom Forge** — inherited ATOMVERSE 2.0. Adjust p+/n0/e−, drag desktop particles to the canvas, side-by-side A/B and five short missions.
+- **LAB 02 Mass Chamber** — 3D *analogical* balance, select isotope and number of atoms (or 1-u reference units), convert u to grams, compare quantities and show equation. This is NOT a physical atomic balance.
+- **LAB 03 Isotope Reactor** — 3D representative particle mixture; dynamically weighted average of Cl-35 and Cl-37, 0–100% slider, A/B snapshot and concept check. These percentages are *user-chosen hypothetical compositions*, not natural abundance measurements.
+- **LAB 04 Molecule Studio** — guided assembly of eight predefined molecules (not arbitrary valence bond creation), progress visible on 3D sphere/bond model, composition validation, relative molecular mass calculation and comparison. Incomplete assemblies are not chemically stable structures.
 
-## ติดตั้งบนเครื่อง Windows/Mac
+## Installation / verify
 
-1. ติดตั้ง **Node.js 22** (หรือ Node 20.19+)
-2. แตก ZIP แล้วเปิด Terminal / PowerShell ในโฟลเดอร์ที่มี `package.json`
-3. รัน:
+Requirements: Node.js 22 or a currently supported LTS. Install Node/npm on your own machine or use GitHub Actions.
 
 ```bash
 npm install
 npm test
+npm run build
 npm run dev
 ```
 
-4. เปิด URL ที่ Vite แจ้ง (ทั่วไปคือ `http://localhost:5173/`)
-5. ก่อนอัปโหลด ควรทดสอบ `npm run build` ถ้าผ่านจะเกิด `dist/`
+Use the Vite local URL printed by the terminal (usually http://localhost:5173/). Please check all four laboratory interactions and mobile screens before distributing to students. `npm run build` produces the `dist` folder.
 
-**อย่าเปิด `index.html` โดยดับเบิลคลิก** เพราะโปรเจกต์นี้ต้อง build ด้วย Vite (ต่างจากรุ่นก่อนที่เป็น HTML static)
+## Update the existing GitHub repository (supaksiri/atomverse-2.0)
 
-## GitHub Pages (วิธีแนะนำ: GitHub Actions)
+1. Back up the current repository (e.g. download ZIP or create a branch).
+2. In the `atomverse-2.0` repository, upload or replace the CONTENTS of `ATOMVERSE_3_COMPLETE/` at the root — importantly, `package.json`, `index.html`, `src`, `tests`, `.github`, `vite.config.ts` and `tsconfig.json`.
+3. Ensure the latest `.github/workflows/deploy.yml` exists, and Settings → Pages → Source is **GitHub Actions**.
+4. In the Actions tab, open the deployment and confirm both npm tests AND build succeed, then visit https://supaksiri.github.io/atomverse-2.0/.
+5. If deployment fails, read the build log and fix reported errors instead of deleting the repository. Do not upload `node_modules`.
 
-1. สร้าง public repository ใหม่ เช่น `atomverse-2`
-2. อัปโหลด **เนื้อหาในโฟลเดอร์โปรเจกต์** ขึ้น root ของ repository: `package.json`, `index.html`, `src/`, `.github/workflows/deploy.yml` ฯลฯ
-3. เปิด **Settings > Pages > Build and deployment > Source > GitHub Actions**
-4. เมื่อ Push ไปที่ `main` ระบบ workflow จะติดตั้ง dependency, ทดสอบ engine, build และ deploy หากขั้นตอนใดล้มเหลวจะไม่เผยแพร่
-5. URL ควรเป็น `https://<username>.github.io/atomverse-2/` ตามชื่อ repository ของตน
+Alternatively use a NEW repository named `atomverse-3.0` to preserve the previous release. The relative Vite `base: './'` is compatible with GitHub project pages.
 
-ตั้ง `base:'./'` ใน `vite.config.ts` เพื่อใช้ asset แบบ relative path รองรับ project pages
+**Important:** GitHub upload via browser of directories that already exist may require uploading files inside each directory, preserving paths. Git CLI or GitHub Desktop is more reliable for a whole-project update.
 
-## วิธีเล่น
+## Science / limitation notes
 
-- เปิด LAB 01 (ปุ่มใหญ่หน้าแรก)
-- ปรับ p⁺, n⁰, e⁻ ด้วยปุ่ม `+/-` หรือคลิกที่อนุภาคในถาดด้านล่าง (บนเดสก์ท็อปสามารถลากจากถาดมาวางบนเวทีได้)
-- เปิด “เปรียบเทียบ A/B” เพื่อดูอะตอมสองตัวพร้อมกัน แล้วสลับฝั่งที่จะปรับบนแผงควบคุม
-- เลือก Preset C-12, C-13, H-1, H-2, O-16, Cl-35, Cl-37
-- กดหมายเลขภารกิจ 1–5, ทดลองด้วยตัวเอง ระบบตรวจสถานะ atom A/B โดยไม่ต้องพิมพ์
+- The 3D scale is conceptual and not an experiment that physically measures an atom. The design uses absolute u for count-weighted samples and clearly identifies reference units.
+- Chlorine isotope masses in `src/chemistry/mass.ts` are approximate published nuclide masses; abundance is deliberately interactive/hypothetical. The definition of 1 u uses C-12, and u-to-g uses 1.66053906660 × 10^-24 g.
+- Relative molecular mass Mr is dimensionless. Standard classroom atomic weights are used for molecular formulas; values differ from exact isotopologue masses.
+- 3D nuclear depiction and molecule geometry are simplified educational illustrations; electrons are not planetary trajectories.
+- The 3D mass balance depicts equal-distance pans with angle controlled by relative difference; it is a *visual analogy*, not an instrument engineering simulation.
+- The interactive particle reactor displays 80 representative spheres with composition rounded to integer counts (displayed percentage is exact from the slider).
+- Four laboratories are available from the landing page. Classroom UX/accessibility and graphics performance have NOT been validated on actual student devices.
 
-## ขอบเขตทางวิทยาศาสตร์
+## Test status
 
-- เลขอะตอม Z = โปรตอน, เลขมวล A = โปรตอน + นิวตรอน, ประจุสุทธิ = โปรตอน − อิเล็กตรอน
-- มวลไอโซโทปเป็นค่าที่แยกจากเลขมวล และแสดงเฉพาะค่าจากตารางข้อมูลที่ฝังในระบบ สำหรับไอโซโทปที่ไม่อยู่ในชุดข้อมูลแสดงว่า **ไม่มีค่าที่ตรวจสอบแล้ว** ไม่ใช้ A เป็นมวลจริง
-- มวลไอโซโทปอะตอมเป็นกลางในหน่วย unified atomic mass unit (u) ตามตาราง mass datasets; ในกรณีไอออนมีความคลาดเคลื่อนเล็กน้อยจากมวลอิเล็กตรอน/พลังงานยึดเหนี่ยว ค่าในจอจึงเรียก 'มวลไอโซโทป' และไม่มีการชดเชยมวลไอออน
-- ตำแหน่งโปรตอนและนิวตรอนใน 3D ถูกจัดด้วย algorithm เพื่อให้เห็นภาพ ไม่ใช่รูปร่างนิวเคลียสจริง
-- ผิวทรงกลมและเส้นบาง ๆ เป็น **องค์ประกอบช่วยมองเห็นขอบเขตของแบบจำลอง** ไม่ใช่เส้นทางโคจรจริงของอิเล็กตรอน; ไม่ได้แสดง quantum orbitals หรือ electron-density solution ที่คำนวณจากสมการ Schrödinger
-- จำนวนโปรตอนรองรับ Z = 1 ถึง 20 และอนุภาคอีกสองชนิดไม่เกิน 40 ต่อชนิด เป็นช่วงฝึกฝน ไม่ใช่ทุกสถานะที่สร้างจะเป็นนิวไคลด์ที่เสถียรหรือพบได้จริง
-
-**แหล่งอ้างอิงสำหรับตรวจสอบและขยายชุดข้อมูล:**
-- NIST Atomic Weights and Isotopic Compositions: https://physics.nist.gov/PhysRefData/Compositions/
-- CIAAW Isotopic Abundances: https://ciaaw.org/isotopic-abundances.htm
-
-## โครงสร้าง
-
-```
-index.html
-vite.config.ts
-package.json
-tsconfig.json
-src/
-  main.tsx
-  App.tsx
-  styles/app.css
-  components/AtomScene.tsx
-  chemistry/atom.ts
-tests/chemistry.test.mjs
-.github/workflows/deploy.yml
-```
-
-## Next iterations (not yet complete)
-
-1. ทำ browser E2E test ครอบคลุม mouse/touch, WebGL, mobile responsiveness
-2. ตรวจและ optimize GPU performance จริงโดย profiling บนเครื่องนักเรียน
-3. เพิ่ม touch drag-and-drop และ accessible keyboard drag alternatives
-4. เพิ่ม fallback canvas/SVG 2D แบบ interactive เต็มรูปแบบ
-5. สร้าง data validation อ้างอิง isotope mass source ที่ตรวจสอบโดยตรงทั้งชุด
-6. เพิ่มการบันทึกความคืบหน้าและยกระดับการใช้เสียง/animation ให้มีความหมาย
-7. ขยาย LAB 02/03/04 โดยใช้ calculation engine แยกจาก visualizations
+Run `npm test` for deterministic scientific unit checks. Consult `TEST_REPORT.md` for executed checks and missing build/browser checks.
